@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/captainspockears/Projects/chatbot-test/model.tflearn"
+all_model_checkpoint_paths: "/home/captainspockears/Projects/chatbot-test/model.tflearn"
