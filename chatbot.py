@@ -9,7 +9,9 @@ import tensorflow
 import random
 import json
 import pickle
+import os
 import playsound
+import string 
 from gtts import gTTS
 
 with open("intents.json") as file:
@@ -92,7 +94,7 @@ def bag_of_words(s, words):
     except:
         nltk.download('punkt')
         s_words = nltk.word_tokenize(s)
-        
+
     s_words = [stemmer.stem(word.lower()) for word in s_words]
 
     for se in s_words:
@@ -121,26 +123,43 @@ def speak(s):
     tts.save(filename)
     playsound.playsound(filename)
 
+def savereply(s):
+    tts = gTTS(text=s, lang="en")
+    filename = ''.join(random.choices(string.ascii_lowercase, k = 5)) 
+    filenamefull = str("static/audio/" + filename + ".mp3")
+    tts.save(filenamefull)
+    #playsound.playsound(filename)
+    return str(filename)
+
 #CODE STARTS HERE
 app = Flask(__name__, template_folder='static', static_folder='static')
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = 'key'
 
 @app.route("/", methods=["POST", "GET"])
 def home():
 
     message = ""
+    path = ""
+    mydir = "static/audio/"
+
+    filelist = [ f for f in os.listdir(mydir) if f.endswith(".mp3") ]
+    print(filelist)
+    for f in filelist:
+        os.remove(os.path.join(mydir, f))
 
     if request.method == "POST":
         message = request.form["msg"]
 
-    print(message)
+        print(message)
 
-    if message != "":
-        output = chat(message)
-        print(output)
-        speak(output)
+        if message != "":
+            output = chat(message)
+            print(output)
+            #speak(output)
+            path = savereply(output)
 
-    return render_template("index.html")
+    return render_template("index.html", soundpath = str("audio/" + path + ".mp3"))
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, use_reloader=True)
