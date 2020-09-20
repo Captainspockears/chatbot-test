@@ -87,7 +87,12 @@ except:
 def bag_of_words(s, words):
     bag = [0 for _ in range(len(words))]
 
-    s_words = nltk.word_tokenize(s)
+    try:
+        s_words = nltk.word_tokenize(s)
+    except:
+        nltk.download('punkt')
+        s_words = nltk.word_tokenize(s)
+        
     s_words = [stemmer.stem(word.lower()) for word in s_words]
 
     for se in s_words:
