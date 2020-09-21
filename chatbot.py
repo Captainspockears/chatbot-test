@@ -14,6 +14,8 @@ import playsound
 import string 
 from gtts import gTTS
 
+TRAIN = False #Flag that controls training the model
+
 with open("intents.json") as file:
     data = json.load(file)
 
@@ -80,9 +82,9 @@ net = tflearn.regression(net)
 
 model = tflearn.DNN(net)
 
-try:
+if TRAIN == False:
     model.load("model.tflearn")
-except:
+else:
     model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
     model.save("model.tflearn")
 
@@ -104,11 +106,11 @@ def bag_of_words(s, words):
             
     return numpy.array(bag)
 
-
 def chat(s):
 
     results = model.predict([bag_of_words(s.lower(), words)])
     results_index = numpy.argmax(results)
+
     tag = labels[results_index]
 
     for tg in data["intents"]:
@@ -127,8 +129,7 @@ def savereply(s):
     tts = gTTS(text=s, lang="en")
     filename = ''.join(random.choices(string.ascii_lowercase, k = 5)) 
     filenamefull = str("static/audio/" + filename + ".mp3")
-    tts.save(filenamefull)
-    #playsound.playsound(filename)
+    tts.save(filenamefull)  
     return str(filename)
 
 #CODE STARTS HERE
@@ -144,7 +145,6 @@ def home():
     mydir = "static/audio/"
 
     filelist = [ f for f in os.listdir(mydir) if f.endswith(".mp3") ]
-    print(filelist)
     for f in filelist:
         os.remove(os.path.join(mydir, f))
 
@@ -156,10 +156,28 @@ def home():
         if message != "":
             output = chat(message)
             print(output)
-            #speak(output)
             path = savereply(output)
+            with open("currmessage.pickle", "wb") as f:
+                pickle.dump((message, output), f)
 
     return render_template("index.html", soundpath = str("audio/" + path + ".mp3"))
+
+@app.route("/report")
+def report():
+    with open("currmessage.pickle", "rb") as f:
+         message, output = pickle.load(f)
+
+    if message != None and output != None and message != "" and output != "":
+
+        newdata = str(message + "$" + output + "\n")
+
+        with open("newintents.txt", "a") as f:
+            f.write(newdata)    
+
+    with open("currmessage.pickle", "wb") as f:
+        pickle.dump(("", ""), f)
+
+    return redirect(url_for("home"))   
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, use_reloader=True)
