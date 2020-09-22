@@ -13,6 +13,8 @@ import os
 import playsound
 import string 
 from gtts import gTTS
+import psycopg2
+from sqlalchemy import create_engine
 
 TRAIN = False #Flag that controls training the model
 
@@ -137,6 +139,16 @@ app = Flask(__name__, template_folder='static', static_folder='static')
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = 'key'
 
+DBNAME = "dbt7kev3gaguro" #Database name
+HOSTNAME = "ec2-52-17-53-249.eu-west-1.compute.amazonaws.com" #Host name
+USER = "ydwfpipdtiadxy" #User's name
+PASS = "7e9a920eba2619f02ccf651a5ed6af726f651e3df7e90f55d166355dc8723451" #Password
+
+#Connect to database
+conn = psycopg2.connect(dbname=DBNAME, user=USER, password=PASS, host=HOSTNAME)
+engine = create_engine('postgres://ydwfpipdtiadxy:7e9a920eba2619f02ccf651a5ed6af726f651e3df7e90f55d166355dc8723451@ec2-52-17-53-249.eu-west-1.compute.amazonaws.com:5432/dbt7kev3gaguro', paramstyle='format') #postgresql://postgres:latlong123@localhost:5432/inventorymanager
+cur = conn.cursor() 
+
 @app.route("/", methods=["POST", "GET"])
 def home():
 
@@ -169,10 +181,11 @@ def report():
 
     if message != None and output != None and message != "" and output != "":
 
-        newdata = str(message + "$" + output + "\n")
+        appendstring = "INSERT INTO public.reports (userinput, robbieoutput) VALUES ('{}', '{}');".format(message, output)
 
-        with open("newintents.txt", "a") as f:
-            f.write(newdata)    
+        cur.execute(appendstring)
+        conn.commit()
+        conn.close()  
 
     with open("currmessage.pickle", "wb") as f:
         pickle.dump(("", ""), f)
@@ -181,3 +194,8 @@ def report():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True, use_reloader=True)
+
+'''
+SELECT * FROM public.reports
+ORDER BY report_id ASC 
+'''
