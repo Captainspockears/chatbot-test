@@ -28,10 +28,12 @@ passlib==1.7.2
 Pillow==7.2.0
 playsound==1.2.2
 protobuf==3.13.0
+psycopg2==2.8.5
 regex==2020.7.14
 requests==2.24.0
 six==1.15.0
 soupsieve==2.0.1
+SQLAlchemy==1.1.11
 tensorboard==1.14.0
 tensorflow==1.14.0
 tensorflow-estimator==1.14.0
