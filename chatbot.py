@@ -181,6 +181,9 @@ def report():
 
     if message != None and output != None and message != "" and output != "":
 
+        output = output.replace("'",'')
+        message = message.replace("'",'')
+
         appendstring = "INSERT INTO public.reports (userinput, robbieoutput) VALUES ('{}', '{}');".format(message, output)
 
         cur.execute(appendstring)
