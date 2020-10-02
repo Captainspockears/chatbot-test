@@ -1,37 +1,58 @@
 {"intents": [
         {"tag": "greeting",
-         "patterns": ["Hi", "Hi there", "Hey", "Is anyone there?", "Hello", "Good day", "Hola"],
-         "responses": ["Hello, it's nice to meet you!", "Hey, sup?", "Hi there, how can I help?"],
+         "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "Whats up"],
+         "responses": ["Hello!", "Good to see you again!", "Hi there, how can I help?"],
          "context_set": "GenQuestion"
-        },
-        {
-          "tag": "howareyou",
-          "patterns": ["How are you", "How are you doing?", "How are you feeling?", "How are you today?"],
-          "responses": ["I'm good, how are you?", "I'm spectacular, and you?", "I'm great, thanks for asking!"],
-          "context_set": "GenQuestion"
-        },
-        {
-          "tag": "whatareyoudoing",
-          "patterns": ["What are you doing?", "Whatcha upto", "What's cooking", "What are you upto?"],
-          "responses": ["Just the usual, talking to humans and having a great time!"],
-          "context_set": "GenQuestion"
-        },
-        {
-          "tag": "acknowledgmentpositive",
-          "patterns": ["Im good thanks", "Good", "fine", "good", "great", "I'm good"],
-          "responses": [ "That's good", "Good", "cool", "yeah, good" ],
-          "context_set": "GenQuestion"
-        },
-        {
-          "tag": "acknowledgmentnegative",
-          "patterns": ["not good", "nah", "bad"],
-          "responses": [ "oh", "what's wrong", "that's not good" ],
-          "context_filter": "GenQuestion"
         },
         {"tag": "goodbye",
-         "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
-         "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon."],
+         "patterns": ["cya", "See you later", "Goodbye", "I am Leaving", "Have a Good day", "bye"],
+         "responses": ["Sad to see you go :(", "Talk to you later", "Goodbye!"],
          "context_set": "GenQuestion"
+        },
+        {"tag": "age",
+         "patterns": ["how old", "how old is", "what is your age", "how old are you", "age?"],
+         "responses": ["I am few days old!", "few days young!"],
+         "context_set": "GenQuestion"
+        },
+        {"tag": "name",
+         "patterns": ["what is your name", "what should I call you", "whats your name?"],
+         "responses": ["You can call me bot.", "I'm bot!", "I'm bot aka program"],
+         "context_set": "GenQuestion"
+        },
+        {"tag": "shop",
+         "patterns": ["Id like to buy something", "whats on the menu", "what do you recommend?", "could i get something to eat", "what do you sell?"],
+         "responses": ["We sell chocolate chip cookies for $2!", "Cookies are on the menu!", "Cookies!!!!"],
+         "context_set": "GenQuestion"
+        },
+        {"tag": "who",
+         "patterns": ["who created you", "where is your code", "are you a bot"],
+         "responses": ["Ask the graphics card", "I'm not a full AI", "I really don't know"],
+         "context_set": ""
+        },
+        {"tag": "think",
+         "patterns": ["what do you think", "what is your opinion", "can you think", "think opinion view"],
+         "responses": ["I don't think much", "Hmmm, let's see", "I'm dumb", ""],
+         "context_set": "GenQuestion"
+        },
+        {"tag": "know",
+         "patterns": ["what can you do", "what do you know", "help", "what are you", "you are ?"],
+         "responses": ["I know of a place that sells cookies", "I only know good snack"],
+         "context_set": ""
+        },
+        {"tag": "contact",
+         "patterns": ["where is the shop", "i would buy some", "i want to talk to a person", "i want to talk to the owner"],
+         "responses": ["You can contact concerned personnel..."],
+         "context_set": "GenQuestion"
+        },
+        {"tag": "talk",
+         "patterns": ["lets talk", "can we talk", "let's discuss", "can you talk about"],
+         "responses": ["I can't talk much :(", "I can help but not talk"],
+        "context_set": "GenQuestion"
+        },
+        {"tag": "busy",
+         "patterns": ["are you busy?", "you're doing anything", "did I disturb you"],
+         "responses": ["No, I'm ready to help!", "I'm totally free :)"],
+        "context_set": "GenQuestion"
         },
         {"tag": "thanks",
          "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me", "Appreciate it"],
@@ -41,11 +62,6 @@
         {"tag": "noanswer",
          "patterns": [],
          "responses": ["Sorry, can't understand you", "Please give me more info", "Not sure I understand"],
-         "context": [""]
-        },
-        {"tag": "options",
-         "patterns": ["How you could help me?", "What can you do?", "What help do you provide?", "How you can be helpful?", "What support is offered?"],
-         "responses": ["I can talk to you and entertain you!", "We can seize the means of production and establish communism!"],
          "context": [""]
         },
         {"tag": "hours",
@@ -59,6 +75,30 @@
         {"tag": "opentoday",
          "patterns": ["Are you open today?", "When do you open today?", "What are your hours today?"],
          "responses": ["We're open every day from 9am-9pm", "Our hours are 9am-9pm every day"]
+        },
+        {
+          "tag": "acknowledgmentnegative",
+          "patterns": ["not good", "nah", "bad"],
+          "responses": [ "oh", "what's wrong", "that's not good" ],
+          "context_filter": "GenQuestion"
+        },
+        {
+          "tag": "acknowledgmentpositive",
+          "patterns": ["Im good thanks", "Good", "fine", "good", "great", "I'm good"],
+          "responses": [ "That's good", "Good", "cool", "yeah, good" ],
+          "context_set": "GenQuestion"
+        },
+        {
+          "tag": "whatareyoudoing",
+          "patterns": ["What are you doing?", "Whatcha upto", "What's cooking", "What are you upto?"],
+          "responses": ["Just the usual, talking to humans and having a great time!"],
+          "context_set": "GenQuestion"
+        },
+        {
+          "tag": "howareyou",
+          "patterns": ["How are you", "How are you doing?", "How are you feeling?", "How are you today?"],
+          "responses": ["I'm good, how are you?", "I'm spectacular, and you?", "I'm great, thanks for asking!"],
+          "context_set": "GenQuestion"
         }
    ]
 }
